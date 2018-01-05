@@ -140,7 +140,7 @@ define(function (require, exports, module) {
 
         isResizableImage: function(ext) {
             ext = FilerUtils.normalizeExtension(ext);
-            return ext === '.png' || ext === '.jpg' || ext === '.jpeg';
+            return ext === '.png' || ext === '.jpg' || ext === '.jpeg' || ext === '.gif';
         },
 
         isHTML: function(ext) {

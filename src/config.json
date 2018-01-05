@@ -65,6 +65,7 @@
         "grunt-targethtml": "0.2.6",
         "grunt-template-jasmine-requirejs": "0.1.0",
         "grunt-usemin": "0.1.11",
+        "is-animated": "^1.1.1",
         "jasmine-node": "1.11.0",
         "less-plugin-autoprefix": "^1.5.1",
         "load-grunt-tasks": "3.5.0",

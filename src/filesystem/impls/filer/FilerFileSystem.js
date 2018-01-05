@@ -24,7 +24,8 @@ define(function (require, exports, module) {
         Async           = require("utils/Async"),
         BrambleEvents   = require("bramble/BrambleEvents"),
         FileSystemCache = require("filesystem/impls/filer/FileSystemCache"),
-        ImageResizer    = require("filesystem/impls/filer/lib/ImageResizer");
+        ImageResizer    = require("filesystem/impls/filer/lib/ImageResizer"),
+        isAnimated      = require("node_modules/is-animated/lib/index");
 
     var fs              = BracketsFiler.fs(),
         Path            = BracketsFiler.Path,
@@ -304,14 +305,20 @@ define(function (require, exports, module) {
 
                     // If this is a big image (>250K), resize it first
                     if(Content.isResizableImage(ext) && Content.isImageTooLarge(data.length)) {
-                        ImageResizer.resize(path, data, function(err, resized) {
-                            if(err) {
-                                return callback(err);
-                            }
-
-                            data = resized;
+                        if(path.match(".*\.gif")&& isAnimated(data)) {
                             Handlers.handleFile(path, data, callback);
-                        });
+                        }
+                        else{
+                            ImageResizer.resize(path, data, function(err, resized) {
+                                if(err) {
+                                    return callback(err);
+                                }
+
+                                data = resized;
+                                Handlers.handleFile(path, data, callback);
+                            });
+                        }
+                        
                     } else {
                         Handlers.handleFile(path, data, callback);
                     }
